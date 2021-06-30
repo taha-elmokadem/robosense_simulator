@@ -3,16 +3,31 @@
   <xacro:arg name="gpu" default="false"/>
   <xacro:property name="gpu" value="$(arg gpu)" />
 
+  <xacro:arg name="ns" default="sensor0"/>
+  <xacro:property name="ns" value="$(arg ns)" />
+
+  <xacro:arg name="x" default="0.0"/>
+  <xacro:arg name="y" default="0.0"/>
+  <xacro:property name="x" value="$(arg x)" />
+  <xacro:property name="y" value="$(arg y)" />
+
   <!-- Base Footprint -->
-  <link name="base_footprint" />
+  <link name="${ns}_mount_base_footprint">
+      <!-- <visual>
+          <origin xyz="${x} ${y} 0.05" rpy="0 0 0" />
+      </visual>
+      <collision>
+          <origin xyz="${x} ${y} 0.05" rpy="0 0 0" />
+      </collision> -->
+  </link>
 
   <!-- Base Link -->
   <joint name="footprint" type="fixed" >
-   <parent link="base_footprint" />
-    <child link="base_link" />
+    <parent link="${ns}_mount_base_footprint" />
+    <child link="${ns}_mount_base_link" />
     <origin xyz="0 0 0.05" rpy="0 0 0" />
   </joint>
-  <link name="base_link" >
+  <link name="${ns}_mount_base_link" >
     <visual>
       <geometry>
         <box size="0.5 0.5 0.1" />
@@ -33,7 +48,7 @@
   </link>
 
   <xacro:include filename="$(find robosense_description)/urdf/RS-16.urdf.xacro"/>
-  <RS-16 parent="base_link" name="robosense" topic="/rs_points" hz="20" samples="900" gpu="${gpu}">
+  <RS-16 parent="${ns}_mount_base_link" name="${ns}" topic="/${ns}/rs_points" hz="20" samples="900" gpu="${gpu}">
     <origin xyz="0 0 0.4" rpy="0 0 0" />
   </RS-16>
 

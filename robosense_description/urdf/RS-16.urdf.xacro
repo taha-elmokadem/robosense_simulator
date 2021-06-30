@@ -61,7 +61,8 @@
                 <max_angle>${max_angle}</max_angle>
               </horizontal>
               <vertical>
-                <samples>${lasers}</samples>
+                <!-- <samples>${lasers}</samples> -->
+                <samples>64</samples>
                 <resolution>1</resolution>
                 <min_angle>-${15.0*M_PI/180.0}</min_angle>
                 <max_angle> ${15.0*M_PI/180.0}</max_angle>
@@ -80,7 +81,7 @@
           </ray>
           <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_robosense_gpu_laser.so">
             <topicName>${topic}</topicName>
-            <frameName>${name}</frameName>
+            <frameName>/${name}_base_link</frameName>
             <min_range>${min_range}</min_range>
             <max_range>${max_range}</max_range>
             <gaussianNoise>${noise}</gaussianNoise>
@@ -120,7 +121,7 @@
           </ray>
           <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_robosense_laser.so">
             <topicName>${topic}</topicName>
-            <frameName>${name}</frameName>
+            <frameName>/${name}_base_link</frameName>
             <min_range>${min_range}</min_range>
             <max_range>${max_range}</max_range>
             <gaussianNoise>${noise}</gaussianNoise>
